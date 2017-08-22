@@ -134,5 +134,3 @@ set bufhidden=hide
 
 " map <F5> :!python.exe % 
 au BufRead *.py map <buffer> <F5> :w<CR>:! python % <CR>   "F5快捷运行python进行编译
-
-
