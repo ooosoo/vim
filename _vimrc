@@ -34,22 +34,15 @@ endif
 
 "打开即关闭
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Go to last file(s) if invoked without arguments.
+autocmd VimLeave * nested if (!isdirectory($HOME . "/.vim")) |
+    \ call mkdir($HOME . "/.vim") |
+    \ endif |
+    \ execute "mksession! " . $HOME . "/.vim/Session.vim"
 
-"set sessionoptions-=curdir  " 在session option中去掉curdir
-"set sessionoptions+=sesdir   " 在session option中加入sesdir
+autocmd VimEnter * nested if argc() == 0 && filereadable($HOME . "/.vim/Session.vim") |
+    \ execute "source " . $HOME . "/.vim/Session.vim"
 
-"autocmd GUIEnter * silent call LoadStatus()   " 在成功启动GUI并打开窗口后,装载上次退出时状态
-"autocmd VimLeavePre * silent call SaveStatus()  " 在退出Vim时刚写入.viminfo文件之前,保存退出时状态
-
-" 装载上次退出时状态
-"function LoadStatus()
-"    exec "source " . $HOME . "/.vim/Session.vim"      " 载入会话文件
-"endfunction
-
-" 保存退出时状态
-"function SaveStatus()
-"    exec "mksession! " . $HOME . "/.vim/Session.vim"        " 创建一个会话文件
-"endfunction
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""	
 	
 	
@@ -98,7 +91,7 @@ endf
 
 "一些set
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-exec 'cd ' . fnameescape('C:\Datebase\Nutstore\Code\Python')
+"exec 'cd ' . fnameescape('C:\Datebase\Nutstore\Code\Python')
 set fileencodings=ucs-bom,utf-8,utf-16,gbk,big5,gb18030,latin1  "中文
 colorscheme monokai "默认配色
 set autoread
@@ -141,4 +134,5 @@ set bufhidden=hide
 
 " map <F5> :!python.exe % 
 au BufRead *.py map <buffer> <F5> :w<CR>:! python % <CR>   "F5快捷运行python进行编译
+
 
